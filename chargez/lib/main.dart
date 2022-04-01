@@ -5,6 +5,8 @@ import 'package:battery_info/battery_info_plugin.dart';
 import 'package:battery_info/enums/charging_status.dart';
 import 'package:battery_info/model/android_battery_info.dart';
 import 'package:battery_info/model/iso_battery_info.dart';
+import 'package:wave/config.dart';
+import 'package:wave/wave.dart';
 
 void main() {
   runApp(const MyApp());
@@ -158,9 +160,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           children: <Widget>[
                             Row(
                               children: [
-                                SizedBox(
-                                  width: 50,
-                                ),
+                                Spacer(flex: 1),
                                 Column(
                                   children: [
                                     Container(
@@ -224,43 +224,99 @@ class _MyHomePageState extends State<MyHomePage> {
                                       height: 30,
                                     ),
                                     Container(
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius: BorderRadius.circular(25),
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: Colors.grey.withOpacity(0.2),
-                                            spreadRadius: 2,
-                                            blurRadius: 4,
-                                            offset: Offset(0,
-                                                5), // changes position of shadow
+                                        decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          borderRadius:
+                                              BorderRadius.circular(25),
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color:
+                                                  Colors.grey.withOpacity(0.2),
+                                              spreadRadius: 2,
+                                              blurRadius: 4,
+                                              offset: Offset(0,
+                                                  5), // changes position of shadow
+                                            ),
+                                          ],
+                                        ),
+                                        width: 140,
+                                        height: 105,
+                                        child: Padding(
+                                          padding: EdgeInsets.only(
+                                              left: 20, top: 15),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                "Charging Type",
+                                                style: TextStyle(
+                                                    color: Colors.grey,
+                                                    fontSize: 11),
+                                              ),
+                                              Text(
+                                                (snapshot.data!.pluggedStatus
+                                                            .toString() ==
+                                                        "unknown")
+                                                    ? "Not Charging"
+                                                    : snapshot
+                                                        .data!.pluggedStatus
+                                                        .toString(),
+                                                style: TextStyle(
+                                                    fontSize: 18,
+                                                    fontWeight:
+                                                        FontWeight.w600),
+                                              ),
+                                              Spacer(
+                                                flex: 1,
+                                              ),
+                                              Padding(
+                                                  padding: EdgeInsets.only(
+                                                      bottom: 20),
+                                                  child: Image.asset(
+                                                    "assets/chargingIcon.png",
+                                                    scale: 14,
+                                                  ))
+                                            ],
                                           ),
-                                        ],
-                                      ),
-                                      width: 130,
-                                      height: 115,
-                                    )
+                                        )),
                                   ],
                                 ),
                                 SizedBox(
-                                  width: 20,
+                                  width: 50,
                                 ),
                                 Container(
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(25),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.grey.withOpacity(0.2),
-                                        spreadRadius: 2,
-                                        blurRadius: 4,
-                                        offset: Offset(
-                                            0, 5), // changes position of shadow
+                                    width: 140,
+                                    height: 245,
+                                    child: Card(
+                                      elevation: 5,
+                                      clipBehavior: Clip.hardEdge,
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(16.0))),
+                                      child: WaveWidget(
+                                        config: CustomConfig(
+                                          gradients: [
+                                            [Colors.red, Color(0xEEF44336)],
+                                            [Colors.orange, Color(0x66FF9800)],
+                                            [Colors.yellow, Color(0x55FFEB3B)]
+                                          ],
+                                          durations: [35000, 10800, 6000],
+                                          heightPercentages: [0.20, 0.25, 0.30],
+                                          blur: MaskFilter.blur(
+                                              BlurStyle.solid, 10),
+                                          gradientBegin: Alignment.bottomLeft,
+                                          gradientEnd: Alignment.topRight,
+                                        ),
+                                        waveAmplitude: 0,
+                                        size: Size(
+                                          double.infinity,
+                                          double.infinity,
+                                        ),
                                       ),
-                                    ],
-                                  ),
-                                  width: 130,
-                                  height: 260,
+                                    )),
+                                Spacer(
+                                  flex: 1,
                                 )
                               ],
                             )
