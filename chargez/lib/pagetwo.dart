@@ -1,43 +1,19 @@
 import 'dart:math';
 
 import 'package:battery_info/battery_info_plugin.dart';
-import 'package:battery_info/model/iso_battery_info.dart';
-import 'package:chargez/pagetwo.dart';
-import 'package:flutter/material.dart';
-import 'package:battery_info/battery_info_plugin.dart';
-import 'package:battery_info/enums/charging_status.dart';
 import 'package:battery_info/model/android_battery_info.dart';
-import 'package:battery_info/model/iso_battery_info.dart';
+import 'package:flutter/material.dart';
 import 'package:wave/config.dart';
 import 'package:wave/wave.dart';
 
-void main() {
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+class PageTwo extends StatefulWidget {
+  const PageTwo({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'ChargeZ',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const MyHomePage(),
-    );
-  }
+  State<PageTwo> createState() => _PageTwoState();
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key}) : super(key: key);
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
+class _PageTwoState extends State<PageTwo> {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -489,11 +465,12 @@ class _MyHomePageState extends State<MyHomePage> {
                                       child: IconButton(
                                         icon: Icon(
                                           Icons.battery_full_rounded,
-                                          color:
-                                              Color.fromRGBO(119, 255, 171, 1),
+                                          color: Colors.black,
                                           size: 30,
                                         ),
-                                        onPressed: () {},
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
                                       ),
                                     ),
                                     Spacer(
@@ -504,17 +481,11 @@ class _MyHomePageState extends State<MyHomePage> {
                                       child: IconButton(
                                         icon: Icon(
                                           Icons.apps_rounded,
-                                          color: Colors.black,
+                                          color:
+                                              Color.fromRGBO(119, 255, 171, 1),
                                           size: 30,
                                         ),
-                                        onPressed: () {
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    const PageTwo()),
-                                          );
-                                        },
+                                        onPressed: null,
                                       ),
                                     ),
                                     Spacer(
