@@ -50,7 +50,7 @@ class _MyHomePageState extends State<MyHomePage> {
     super.didChangeDependencies();
     banner = BannerAd(
         size: AdSize.banner,
-        adUnitId: "ca-app-pub-3940256099942544/6300978111",
+        adUnitId: "ca-app-pub-1724779520900121/5509340762",
         listener: BannerAdListener(onAdLoaded: (ad) {
           setState(() {
             isLoaded = true;
@@ -72,16 +72,16 @@ class _MyHomePageState extends State<MyHomePage> {
           Container(
             height: height * 0.1,
             child: Row(children: [
-              IconButton(
+              /*IconButton(
                   onPressed: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => const Settings()),
                     );
                   },
-                  icon: Icon(Icons.settings, color: Colors.white)),
+                  icon: Icon(Icons.settings, color: Colors.white)),*/
               Padding(
-                padding: EdgeInsets.only(left: 100),
+                padding: EdgeInsets.only(left: 120),
                 child: Text(
                   "ChargeZ",
                   style: TextStyle(
