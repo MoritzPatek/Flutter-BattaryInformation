@@ -3,16 +3,19 @@ import 'dart:math';
 import 'package:battery_info/battery_info_plugin.dart';
 import 'package:battery_info/model/iso_battery_info.dart';
 import 'package:chargez/pagetwo.dart';
+import 'package:chargez/settings.dart';
 import 'package:flutter/material.dart';
 import 'package:battery_info/battery_info_plugin.dart';
 import 'package:battery_info/enums/charging_status.dart';
 import 'package:battery_info/model/android_battery_info.dart';
 import 'package:battery_info/model/iso_battery_info.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:wave/config.dart';
 import 'package:wave/wave.dart';
 
 void main() {
   runApp(const MyApp());
+  MobileAds.instance.initialize();
 }
 
 class MyApp extends StatelessWidget {
@@ -21,6 +24,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'ChargeZ',
       theme: ThemeData(
         primarySwatch: Colors.blue,
@@ -38,6 +42,26 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  BannerAd? banner;
+  bool isLoaded = false;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    banner = BannerAd(
+        size: AdSize.banner,
+        adUnitId: "ca-app-pub-3940256099942544/6300978111",
+        listener: BannerAdListener(onAdLoaded: (ad) {
+          setState(() {
+            isLoaded = true;
+          });
+        }, onAdFailedToLoad: (ad, error) {
+          ad.dispose();
+        }),
+        request: AdRequest());
+    banner!.load();
+  }
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -45,8 +69,28 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
         backgroundColor: Color.fromRGBO(99, 215, 135, 1),
         body: Column(children: [
-          SizedBox(
+          Container(
             height: height * 0.1,
+            child: Row(children: [
+              IconButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const Settings()),
+                    );
+                  },
+                  icon: Icon(Icons.settings, color: Colors.white)),
+              Padding(
+                padding: EdgeInsets.only(left: 100),
+                child: Text(
+                  "ChargeZ",
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 30,
+                      fontWeight: FontWeight.w600),
+                ),
+              ),
+            ]),
           ),
           Container(
               decoration: BoxDecoration(
@@ -522,6 +566,12 @@ class _MyHomePageState extends State<MyHomePage> {
                                     ),
                                   ],
                                 )),
+                            isLoaded
+                                ? Container(
+                                    height: 25,
+                                    child: AdWidget(ad: banner!),
+                                  )
+                                : SizedBox()
                           ],
                         );
                       }
